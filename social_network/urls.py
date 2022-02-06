@@ -20,12 +20,15 @@ from rest_framework import routers
 
 from users import views as users_views
 from posts import views as posts_views
+from comments import views as comments_views
 
 router = routers.DefaultRouter()
 router.register(r'users', users_views.UserViewSet)
 router.register(r'posts', posts_views.PostViewSet)
+router.register(r'comments', comments_views.CommentViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1.0/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls')),
 ]
