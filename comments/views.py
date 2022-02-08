@@ -4,6 +4,8 @@ from rest_framework import permissions
 from .models import Comment
 from .serializers import CommentSerializer
 
+from posts.permissions import IsAuthorOrReadOnly
+
 # Create your views here.
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -13,4 +15,4 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     queryset = Comment.objects.all().order_by('-date_published')
     serializer_class = CommentSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsAuthorOrReadOnly]
