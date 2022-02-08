@@ -3,6 +3,7 @@ from rest_framework import permissions
 
 from .models import User
 from .serializers import UserSerializer
+from .permissions import IsYouOrReadOnly
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -11,5 +12,4 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
- 
+    permission_classes = [permissions.IsAuthenticated, IsYouOrReadOnly]
