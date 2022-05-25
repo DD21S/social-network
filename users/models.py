@@ -17,11 +17,13 @@ class User(AbstractUser):
     followers = models.ManyToManyField(
         'self',
         related_name='account_followers',
-        symmetrical=False
+        symmetrical=False,
+        blank=True
     )
     following = models.ManyToManyField(
         'self',
         related_name='account_following',
-        symmetrical=False
+        symmetrical=False,
+        blank=True
     )
     

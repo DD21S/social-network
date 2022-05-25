@@ -1,6 +1,14 @@
-media/
-pycache/
+# Virtual enviroment
+/venv
+
+# Python
+/pycache
 *.pyc
 *.sqlite3
 sqlite3
+
+# Django
+/media
+
+# Variables enviroment
 .env
