@@ -12,9 +12,6 @@ class Comment(models.Model):
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
 
-    def __str__(self):
-        return self.date_published
-
     date_published = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -22,3 +19,14 @@ class Comment(models.Model):
     image = models.ImageField(upload_to='comments/', blank=True)
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
+
+    def liking(self):
+        self.likes += 1
+        self.save()
+
+    def disliking(self):
+        self.dislikes += 1
+        self.save()
+
+    def __str__(self):
+        return str(self.id)
