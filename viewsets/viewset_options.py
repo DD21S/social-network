@@ -6,44 +6,30 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from permissions.is_author_or_create_or_read_only import IsAuthorOrCreateOrReadOnly
+
 class ViewSetOptions(viewsets.ModelViewSet):
     """
     A viewset that provides the standard actions and like and dislikes options.
     """
 
+    permission_classes = [IsAuthenticated, IsAuthorOrCreateOrReadOnly]
+
     def create(self, request, pk=None):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             data = serializer.validated_data
-            if 'post' in data:
-                new_object = self.create_comment(request.user, data)
-            else:
-                new_object = self.create_post(request.user, data)
+            new_object = self.create_new_object(request.user, data)
             serializer = self.serializer_class(new_object)
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get_image_or_none(self, data):
-        image = None
-        if 'image' in data:
-            image = data['image']
+    def create_new_object(self, user, data):
+        new_object = self.model_class(author=user, **data)
+        new_object.save()
 
-        return image
-
-    def create_post(self, user, data):
-        image = self.get_image_or_none(data) 
-        new_post = self.model_class(author=user, content=data['content'], image=image)
-        new_post.save()
-
-        return new_post
-
-    def create_comment(self, user, data):
-        image = self.get_image_or_none(data)
-        new_comment = self.model_class(author=user, post=data['post'], content=data['content'], image=image)
-        new_comment.save()
-
-        return new_comment
+        return new_object
 
     @action(detail=True)
     def like(self, request, pk=None):

@@ -26,11 +26,13 @@ from rest_framework_simplejwt.views import (
 
 from comments.urls import router as comments_router
 from posts.urls import router as posts_router
+from users.urls import router as users_router
 from patches.router import CustomRouter
 
 router = CustomRouter()
 router.extend(comments_router)
 router.extend(posts_router)
+router.extend(users_router)
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
@@ -38,5 +40,6 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('', include('users.urls')),
     path('', include(router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

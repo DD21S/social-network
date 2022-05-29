@@ -26,4 +26,7 @@ class User(AbstractUser):
         symmetrical=False,
         blank=True
     )
+
+    def __str__(self):
+        return self.username
     
