@@ -143,4 +143,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'UPLOADED_FILES_USE_URL': True
 }
