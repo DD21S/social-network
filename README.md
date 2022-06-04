@@ -10,7 +10,7 @@ First of all, clone this repo.
 git clone https://github.com/DD21S/social-network.git
 ```
 
-Then, in the project directory, you install the requirements.
+Then, in the project directory, install the requirements.
 
 ```
 pip install -r requirements.txt
@@ -19,13 +19,13 @@ pip install -r requirements.txt
 Now, make the migrations.
 
 ```
-python3 manage.py migrate
+python manage.py migrate
 ```
 
 And finally, run the project.
 
 ```
-python3 manage.py runserver
+python manage.py runserver
 ```
 
 Ready, now your API is running :&#41;
